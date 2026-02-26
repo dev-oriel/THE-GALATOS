@@ -44,7 +44,7 @@ const AboutPage = () => {
               <span className="material-symbols-outlined">arrow_right_alt</span>
             </button>
           </div>
-          <div className="aspect-[4/5] bg-primary/10 overflow-hidden rounded-2xl">
+          <div className="aspect-4/5 bg-primary/10 overflow-hidden rounded-2xl">
             <img
               src="https://images.unsplash.com/photo-1617146059254-d1b14af77f85?auto=format&fit=crop&q=80"
               alt="Artisan"
