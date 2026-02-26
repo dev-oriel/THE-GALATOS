@@ -2,7 +2,7 @@ import React from "react";
 
 const AboutPage = () => {
   return (
-    <main className="flex-grow">
+    <main className="grow">
       {/* Hero Section */}
       <section className="relative h-[80vh] flex items-center justify-center overflow-hidden">
         <div
