@@ -1,1 +1,24 @@
 @import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-primary: #b86614;
+  --color-background-light: #f8f7f6;
+  --color-background-dark: #211911;
+  --color-neutral-soft: #e5e0dc;
+  --color-text-main: #181411;
+  --color-text-muted: #887563;
+
+  /* Fonts */
+  --font-display: "Manrope", sans-serif;
+  --font-serif: "Playfair Display", serif;
+
+  /* Transitions & Spacing adjustments can also go here */
+}
+
+/* Base resets if needed */
+@layer base {
+  body {
+    @apply bg-background-light dark:bg-background-dark text-text-main dark:text-slate-100;
+  }
+}
