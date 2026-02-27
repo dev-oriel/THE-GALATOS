@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useCart } from "../../context/CartContext";
 
 const ProductCard = ({
   id,
@@ -10,6 +11,13 @@ const ProductCard = ({
   isLimited,
   hasQuickAdd,
 }) => {
+  const { addToCart } = useCart();
+
+  const handleQuickAdd = (e) => {
+    e.preventDefault();
+    addToCart({ id, image, title, category, price });
+  };
+
   return (
     <div className="group relative">
       <Link to={`/product/${id}`} className="block cursor-pointer">
@@ -31,10 +39,7 @@ const ProductCard = ({
           {hasQuickAdd && (
             <div className="absolute bottom-4 left-4 right-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-10">
               <button
-                onClick={(e) => {
-                  e.preventDefault(); // Prevents navigating to product page
-                  console.log("Quick add clicked");
-                }}
+                onClick={handleQuickAdd}
                 className="w-full bg-white dark:bg-background-dark py-3 text-xs font-bold uppercase tracking-widest hover:bg-primary hover:text-white transition-colors shadow-lg"
               >
                 Quick Add
@@ -54,7 +59,6 @@ const ProductCard = ({
         </div>
       </Link>
 
-      {/* Favorite button moved outside the main Link to handle its own click */}
       <div className="absolute top-4 right-4 z-20">
         <button
           onClick={(e) => e.preventDefault()}
