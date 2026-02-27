@@ -13,9 +13,37 @@ const Footer = () => {
               Elegance
             </h2>
           </div>
-          <div className="mt-12 text-center text-xs text-text-muted/60">
-            © 2024 Elegance Minimalist Fashion. All Rights Reserved.
+
+          <div className="flex flex-wrap gap-8 text-sm text-text-muted font-display">
+            {["Shipping", "Returns", "Contact", "Privacy"].map((item) => (
+              <a
+                key={item}
+                className="hover:text-primary transition-colors"
+                href="#"
+              >
+                {item}
+              </a>
+            ))}
           </div>
+
+          <div className="flex gap-4">
+            <a
+              className="text-text-muted hover:text-primary transition-colors"
+              href="#"
+            >
+              <span className="material-symbols-outlined">public</span>
+            </a>
+            <a
+              className="text-text-muted hover:text-primary transition-colors"
+              href="#"
+            >
+              <span className="material-symbols-outlined">share</span>
+            </a>
+          </div>
+        </div>
+
+        <div className="mt-12 text-center text-xs text-text-muted/60 uppercase tracking-widest">
+          © 2026 Elegance Minimalist Fashion. Crafted for slow living.
         </div>
       </div>
     </footer>
