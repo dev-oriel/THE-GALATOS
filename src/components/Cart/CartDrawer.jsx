@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 
 const CartDrawer = () => {
+  const navigate = useNavigate();
   const {
     cartItems,
     isCartOpen,
@@ -33,6 +35,13 @@ const CartDrawer = () => {
   const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
   const freeShippingThreshold = 250;
   const progress = Math.min((subtotal / freeShippingThreshold) * 100, 100);
+
+  // Function to navigate to checkout and close drawer
+  const handleCheckout = () => {
+    setIsCartOpen(false);
+    setIsAutoDismissing(false);
+    navigate("/checkout");
+  };
 
   return (
     <>
@@ -79,9 +88,9 @@ const CartDrawer = () => {
               more for free global shipping.
             </p>
           )}
-          <div className="w-full h-1 bg-slate-200 dark:bg-slate-700 rounded-full">
+          <div className="w-full h-1 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
             <div
-              className="h-full bg-primary rounded-full transition-all duration-700"
+              className="h-full bg-primary transition-all duration-700 ease-out"
               style={{ width: `${progress}%` }}
             ></div>
           </div>
@@ -123,7 +132,10 @@ const CartDrawer = () => {
             </div>
 
             <div className="space-y-3">
-              <button className="w-full bg-primary hover:bg-primary/90 text-white py-4 rounded-lg font-bold tracking-widest uppercase text-xs transition-transform active:scale-95 shadow-lg">
+              <button
+                onClick={handleCheckout}
+                className="w-full bg-primary hover:bg-primary/90 text-white py-4 rounded-lg font-bold tracking-widest uppercase text-xs transition-transform active:scale-95 shadow-lg cursor-pointer"
+              >
                 Proceed to Checkout
               </button>
               {isAutoDismissing && (
@@ -131,6 +143,12 @@ const CartDrawer = () => {
                   <div className="h-full bg-primary animate-[shrink_5s_linear]" />
                 </div>
               )}
+              <button
+                onClick={() => setIsCartOpen(false)}
+                className="w-full bg-transparent hover:bg-primary/5 text-slate-800 dark:text-slate-200 py-3 rounded-lg font-medium text-xs transition-colors cursor-pointer"
+              >
+                Continue Shopping
+              </button>
             </div>
           </div>
         )}
@@ -156,7 +174,7 @@ const CartItem = ({ item, onUpdate, onRemove }) => (
           </h4>
           <button
             onClick={() => onRemove(item.id)}
-            className="text-slate-300 hover:text-red-400 transition-colors"
+            className="text-slate-300 hover:text-red-400 transition-colors cursor-pointer"
           >
             <span className="material-symbols-outlined text-lg">delete</span>
           </button>
@@ -167,7 +185,7 @@ const CartItem = ({ item, onUpdate, onRemove }) => (
         <div className="flex items-center border border-primary/10 rounded overflow-hidden">
           <button
             onClick={() => onUpdate(item.id, -1)}
-            className="px-3 py-1 hover:bg-primary/5 text-slate-500 text-sm font-bold"
+            className="px-3 py-1 hover:bg-primary/5 text-slate-500 text-sm font-bold cursor-pointer"
           >
             -
           </button>
@@ -176,7 +194,7 @@ const CartItem = ({ item, onUpdate, onRemove }) => (
           </span>
           <button
             onClick={() => onUpdate(item.id, 1)}
-            className="px-3 py-1 hover:bg-primary/5 text-slate-500 text-sm font-bold"
+            className="px-3 py-1 hover:bg-primary/5 text-slate-500 text-sm font-bold cursor-pointer"
           >
             +
           </button>
