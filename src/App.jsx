@@ -8,7 +8,7 @@ import StoryPage from './pages/StoryPage';
 export default function App() {
   return (
     <Router>
-      <div className="flex min-h-screen flex-col selection:bg-primary/20 bg-background-light dark:bg-background-dark">
+      <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-light text-text-main dark:bg-background-dark dark:text-slate-100 font-display transition-colors duration-300">
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
