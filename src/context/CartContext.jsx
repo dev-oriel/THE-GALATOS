@@ -1,12 +1,11 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [showPreview, setShowPreview] = useState(false);
-  const [lastAddedItem, setLastAddedItem] = useState(null);
+  const [isAutoDismissing, setIsAutoDismissing] = useState(false);
 
   const addToCart = (product) => {
     setCartItems((prev) => {
@@ -14,32 +13,47 @@ export const CartProvider = ({ children }) => {
       if (existing) {
         return prev.map((item) =>
           item.id === product.id
-            ? { ...item, quantity: (item.quantity || 1) + 1 }
+            ? { ...item, quantity: item.quantity + 1 }
             : item,
         );
       }
       return [...prev, { ...product, quantity: 1 }];
     });
 
-    setLastAddedItem(product);
-    setShowPreview(true);
+    // Open drawer and trigger auto-dismissal logic
+    setIsCartOpen(true);
+    setIsAutoDismissing(true);
   };
 
-  const openCart = () => setIsCartOpen(true);
-  const closeCart = () => setIsCartOpen(false);
-  const hidePreview = () => setShowPreview(false);
+  const updateQuantity = (id, delta) => {
+    setCartItems((prev) =>
+      prev.map((item) => {
+        if (item.id === id) {
+          const newQty = Math.max(1, item.quantity + delta);
+          return { ...item, quantity: newQty };
+        }
+        return item;
+      }),
+    );
+    setIsAutoDismissing(false); // Stop auto-dismiss if user interacts
+  };
+
+  const removeFromCart = (id) => {
+    setCartItems((prev) => prev.filter((item) => item.id !== id));
+    setIsAutoDismissing(false);
+  };
 
   return (
     <CartContext.Provider
       value={{
         cartItems,
         isCartOpen,
-        showPreview,
-        lastAddedItem,
+        setIsCartOpen,
+        isAutoDismissing,
+        setIsAutoDismissing,
         addToCart,
-        openCart,
-        closeCart,
-        hidePreview,
+        updateQuantity,
+        removeFromCart,
       }}
     >
       {children}

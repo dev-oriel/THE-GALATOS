@@ -1,29 +1,63 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useCart } from "../../context/CartContext";
 
-const CartDrawer = ({ isOpen, onClose }) => {
-  if (!isOpen) return null;
+const CartDrawer = () => {
+  const {
+    cartItems,
+    isCartOpen,
+    setIsCartOpen,
+    isAutoDismissing,
+    setIsAutoDismissing,
+    updateQuantity,
+    removeFromCart,
+  } = useCart();
+
+  // Handle auto-dismissal when an item is added
+  useEffect(() => {
+    let timer;
+    if (isCartOpen && isAutoDismissing) {
+      timer = setTimeout(() => {
+        setIsCartOpen(false);
+        setIsAutoDismissing(false);
+      }, 5000); // Closes after 5 seconds of inactivity
+    }
+    return () => clearTimeout(timer);
+  }, [isCartOpen, isAutoDismissing, setIsCartOpen, setIsAutoDismissing]);
+
+  if (!isCartOpen) return null;
+
+  const subtotal = cartItems.reduce(
+    (acc, item) => acc + parseFloat(item.price) * item.quantity,
+    0,
+  );
+  const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+  const freeShippingThreshold = 250;
+  const progress = Math.min((subtotal / freeShippingThreshold) * 100, 100);
 
   return (
     <>
-      {/* Overlay */}
       <div
         className="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-[60] transition-opacity"
-        onClick={onClose}
+        onClick={() => setIsCartOpen(false)}
       />
 
-      {/* Drawer */}
-      <aside className="fixed top-0 right-0 h-full w-full max-w-md bg-white dark:bg-background-dark shadow-2xl z-[70] flex flex-col animate-in slide-in-from-right duration-300">
-        {/* Drawer Header */}
+      <aside
+        onMouseEnter={() => setIsAutoDismissing(false)} // Stop timer if user hovers
+        className="fixed top-0 right-0 h-full w-full max-w-md bg-white dark:bg-background-dark shadow-2xl z-[70] flex flex-col animate-in slide-in-from-right duration-300"
+      >
+        {/* Header */}
         <div className="flex items-center justify-between px-8 py-6 border-b border-primary/5">
           <div className="flex items-center gap-2">
-            <h3 className="text-xl font-semibold tracking-tight">
+            <h3 className="text-xl font-semibold tracking-tight uppercase">
               Your Basket
             </h3>
-            <span className="text-slate-400 font-light">(2 items)</span>
+            <span className="text-slate-400 font-light">
+              ({totalItems} {totalItems === 1 ? "item" : "items"})
+            </span>
           </div>
           <button
-            onClick={onClose}
-            className="p-2 hover:bg-background-light dark:hover:bg-primary/10 rounded-full transition-colors"
+            onClick={() => setIsCartOpen(false)}
+            className="p-2 hover:bg-primary/5 rounded-full transition-colors"
           >
             <span className="material-symbols-outlined text-slate-500">
               close
@@ -31,97 +65,125 @@ const CartDrawer = ({ isOpen, onClose }) => {
           </button>
         </div>
 
-        {/* Free Shipping Progress */}
+        {/* Shipping Progress */}
         <div className="px-8 py-4 bg-primary/5">
           <p className="text-xs font-medium text-primary uppercase tracking-widest mb-2">
-            Almost there
+            {progress >= 100 ? "You've earned free shipping!" : "Almost there"}
           </p>
-          <p className="text-sm text-slate-600 dark:text-slate-300 mb-3">
-            Add <span className="font-bold">$45.00</span> more for free global
-            shipping.
-          </p>
+          {progress < 100 && (
+            <p className="text-sm text-slate-600 dark:text-slate-300 mb-3">
+              Add{" "}
+              <span className="font-bold">
+                ${(freeShippingThreshold - subtotal).toFixed(2)}
+              </span>{" "}
+              more for free global shipping.
+            </p>
+          )}
           <div className="w-full h-1 bg-slate-200 dark:bg-slate-700 rounded-full">
             <div
-              className="h-full bg-primary rounded-full transition-all duration-500"
-              style={{ width: "75%" }}
+              className="h-full bg-primary rounded-full transition-all duration-700"
+              style={{ width: `${progress}%` }}
             ></div>
           </div>
         </div>
 
-        {/* Cart Items List */}
-        <div className="flex-1 overflow-y-auto px-8 py-4 space-y-8">
-          <CartItem
-            title="Ceramic Studio Vase"
-            price={85.0}
-            variant="Matte Bone White / Medium"
-            img="https://lh3.googleusercontent.com/aida-public/AB6AXuBsGJRauQVWIijq1-2Uwsp2NVeOowppusSwim7a0dEcnDi63vs9Dn2Y7LLVBt5ONBRNJ1gL-ZmyJh4YCF8iDiqmYVO6AcGQc__u1O21XlX2iOvdszPw28M-bWGSG2Vz7yf2rLiqo5xVwFViB-cgxuSm4jlRD-OOvCU1Wt_MJ2WfoQiHEyiZ2EYgY4aXJ1KdPQuPP2D8p9Ec9VI8bHwG2sd0mDZMFqb6QOe6j5mLvPKl_KmXtzOZFqaOSUg7Gq6iKv-stNyvk-0BaXqj"
-          />
-          <CartItem
-            title="Woven Linen Throw"
-            price={120.0}
-            variant="Organic Sand / Large"
-            img="https://lh3.googleusercontent.com/aida-public/AB6AXuBfWCbdB4as8Fx24lSog1KzHyOTG1M1cyrBxl-ufzMY0YuuBggNevumfha3VnqYcOaK9g5wVdCfQRX-pVz24RhRdbTjZtpI2IbvKgA2QhVuPYV52sfgq0FR3euS1WYCqG99e_UNMT70PpyG6d6H1TCyfi5INr1GlFbeBVU6H-gmIh_hzzuOubmVyoocrDAl_t3kRh_2M9YIWf9CxiQls6Qlczvnk4qvS5iAMGtz4Lbt8TQXYgSY9MLNLpiRN07W7MBGUZK_HtJ7nMID"
-          />
+        {/* List */}
+        <div className="flex-1 overflow-y-auto px-8 py-4 space-y-8 no-scrollbar">
+          {cartItems.length > 0 ? (
+            cartItems.map((item) => (
+              <CartItem
+                key={item.id}
+                item={item}
+                onUpdate={updateQuantity}
+                onRemove={removeFromCart}
+              />
+            ))
+          ) : (
+            <div className="h-full flex flex-col items-center justify-center text-slate-400 space-y-4">
+              <span className="material-symbols-outlined text-6xl opacity-20">
+                shopping_basket
+              </span>
+              <p className="font-display italic">Your basket is empty</p>
+            </div>
+          )}
         </div>
 
-        {/* Drawer Footer */}
-        <div className="px-8 py-8 border-t border-primary/5 space-y-6">
-          <div className="space-y-2 font-display">
-            <div className="flex justify-between text-sm">
-              <span className="text-slate-500">Subtotal</span>
-              <span className="font-medium">$205.00</span>
+        {/* Footer */}
+        {cartItems.length > 0 && (
+          <div className="px-8 py-8 border-t border-primary/5 space-y-6">
+            <div className="space-y-2 font-display">
+              <div className="flex justify-between text-sm">
+                <span className="text-slate-500">Subtotal</span>
+                <span className="font-medium">${subtotal.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between text-lg font-bold border-t border-primary/5 pt-4">
+                <span>Total</span>
+                <span className="text-primary">${subtotal.toFixed(2)}</span>
+              </div>
             </div>
-            <div className="flex justify-between text-lg font-bold border-t border-primary/5 pt-4">
-              <span>Total</span>
-              <span className="text-primary">$205.00</span>
-            </div>
-          </div>
 
-          <div className="space-y-3">
-            <button className="w-full bg-primary hover:bg-primary/90 text-white py-4 rounded-lg font-bold tracking-widest uppercase text-xs transition-colors shadow-lg active:scale-[0.98]">
-              Proceed to Checkout
-            </button>
-            <button
-              onClick={onClose}
-              className="w-full bg-transparent hover:bg-primary/5 text-slate-800 dark:text-slate-200 py-3 rounded-lg font-medium text-xs transition-colors"
-            >
-              Continue Shopping
-            </button>
+            <div className="space-y-3">
+              <button className="w-full bg-primary hover:bg-primary/90 text-white py-4 rounded-lg font-bold tracking-widest uppercase text-xs transition-transform active:scale-95 shadow-lg">
+                Proceed to Checkout
+              </button>
+              {isAutoDismissing && (
+                <div className="h-1 bg-primary/10 w-full rounded-full overflow-hidden">
+                  <div className="h-full bg-primary animate-[shrink_5s_linear]" />
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </aside>
     </>
   );
 };
 
-const CartItem = ({ title, price, variant, img }) => (
-  <div className="flex gap-6 items-start group">
+const CartItem = ({ item, onUpdate, onRemove }) => (
+  <div className="flex gap-6 items-start group animate-in fade-in slide-in-from-bottom-2">
     <div className="h-28 w-24 bg-background-light dark:bg-slate-800 rounded-lg flex-shrink-0 overflow-hidden">
-      <img className="h-full w-full object-cover" src={img} alt={title} />
+      <img
+        className="h-full w-full object-cover"
+        src={item.image}
+        alt={item.title}
+      />
     </div>
     <div className="flex-1 flex flex-col h-28 justify-between">
       <div>
         <div className="flex justify-between items-start">
-          <h4 className="text-sm font-medium text-slate-800 dark:text-slate-100 uppercase tracking-wide">
-            {title}
+          <h4 className="text-sm font-medium text-slate-800 dark:text-slate-100 uppercase tracking-wide truncate pr-4">
+            {item.title}
           </h4>
-          <button className="text-slate-400 hover:text-red-400 transition-colors">
+          <button
+            onClick={() => onRemove(item.id)}
+            className="text-slate-300 hover:text-red-400 transition-colors"
+          >
             <span className="material-symbols-outlined text-lg">delete</span>
           </button>
         </div>
-        <p className="text-xs text-slate-500 mt-1 italic">{variant}</p>
+        <p className="text-xs text-slate-500 mt-1 italic">{item.category}</p>
       </div>
       <div className="flex items-center justify-between mt-auto">
         <div className="flex items-center border border-primary/10 rounded overflow-hidden">
-          <button className="px-3 py-1 hover:bg-primary/5 text-slate-500 text-sm font-bold">
+          <button
+            onClick={() => onUpdate(item.id, -1)}
+            className="px-3 py-1 hover:bg-primary/5 text-slate-500 text-sm font-bold"
+          >
             -
           </button>
-          <span className="px-3 py-1 text-sm font-medium">1</span>
-          <button className="px-3 py-1 hover:bg-primary/5 text-slate-500 text-sm font-bold">
+          <span className="px-3 py-1 text-sm font-medium min-w-[2rem] text-center">
+            {item.quantity}
+          </span>
+          <button
+            onClick={() => onUpdate(item.id, 1)}
+            className="px-3 py-1 hover:bg-primary/5 text-slate-500 text-sm font-bold"
+          >
             +
           </button>
         </div>
-        <p className="text-sm font-semibold">${price.toFixed(2)}</p>
+        <p className="text-sm font-semibold">
+          ${(parseFloat(item.price) * item.quantity).toFixed(2)}
+        </p>
       </div>
     </div>
   </div>
