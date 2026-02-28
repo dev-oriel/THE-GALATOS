@@ -129,7 +129,7 @@ const CheckoutPage = () => {
                   key={item.id}
                   className="flex gap-4 items-center animate-in fade-in slide-in-from-right-4"
                 >
-                  <div className="relative w-20 h-24 bg-white dark:bg-slate-800 rounded-lg overflow-hidden flex-shrink-0 shadow-sm">
+                  <div className="relative w-20 h-24 bg-white dark:bg-slate-800 rounded-lg overflow-hidden shrink-0 shadow-sm">
                     <img
                       alt={item.title}
                       className="w-full h-full object-cover"
