@@ -74,7 +74,7 @@ const ProductDetails = () => {
 // Internal sub-component for Related Items using your images 25-28
 const RelatedProducts = () => (
   <section className="mt-24 pb-24">
-    <h3 className="text-2xl font-bold mb-8">Complements the Heritage Tote</h3>
+    <h3 className="text-2xl font-bold mb-8">Complements the Heritage Tote bags</h3>
     <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
       {[
         { title: "Slim Bi-Fold Wallet", price: "85.00", img: "25" },
