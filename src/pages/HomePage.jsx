@@ -11,7 +11,7 @@ const HomePage = () => {
       <Philosophy />
 
       {/* Simple Newsletter remains here or can be its own Shared component */}
-      <section className="mx-auto max-w-[1440px] px-6 py-24 text-center lg:px-20 border-t border-neutral-soft/50 dark:border-primary/10">
+      <section className="mx-auto max-w-360 px-6 py-24 text-center lg:px-20 border-t border-neutral-soft/50 dark:border-primary/10">
         <h3 className="text-3xl font-light tracking-tight italic">
           Join our slow living community
         </h3>
