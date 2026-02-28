@@ -86,7 +86,7 @@ const ShopPage = () => {
             <span className="text-primary italic font-medium">Essentials</span>
           </h2>
           <p className="text-lg text-slate-500 dark:text-slate-400 font-light leading-relaxed">
-            A curated collection small-batch ceramic, wood, and textile goods
+            A curated collection of small-batch ceramic, wood, and textile goods
             crafted by independent artisans from around the globe.
           </p>
         </div>
