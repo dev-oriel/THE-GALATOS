@@ -28,7 +28,7 @@ const HomePage = () => {
             type="email"
           />
           <button className="rounded-lg bg-primary px-6 py-3 text-sm font-bold text-white hover:opacity-90 transition-opacity">
-            Subscribe button
+            Subscribe
           </button>
         </form>
       </section>
