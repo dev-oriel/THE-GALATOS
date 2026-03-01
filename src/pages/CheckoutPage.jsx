@@ -20,8 +20,8 @@ const CheckoutPage = () => {
                 temp_preferences_custom
               </span>
             </div>
-            <h1 className="text-xl font-bold tracking-tight uppercase">
-              Handmade Goods
+            <h1 className="text-xl  font-bold tracking-tight uppercase">
+              THE GALATOS
             </h1>
           </Link>
           <div className="flex items-center gap-2 text-slate-500 text-sm font-medium">
