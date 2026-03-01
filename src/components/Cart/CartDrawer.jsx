@@ -46,13 +46,13 @@ const CartDrawer = () => {
   return (
     <>
       <div
-        className="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-[60] transition-opacity"
+        className="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-60 transition-opacity"
         onClick={() => setIsCartOpen(false)}
       />
 
       <aside
         onMouseEnter={() => setIsAutoDismissing(false)} // Stop timer if user hovers
-        className="fixed top-0 right-0 h-full w-full max-w-md bg-white dark:bg-background-dark shadow-2xl z-[70] flex flex-col animate-in slide-in-from-right duration-300"
+        className="fixed top-0 right-0 h-full w-full max-w-md bg-white dark:bg-background-dark shadow-2xl z-70 flex flex-col animate-in slide-in-from-right duration-300"
       >
         {/* Header */}
         <div className="flex items-center justify-between px-8 py-6 border-b border-primary/5">
