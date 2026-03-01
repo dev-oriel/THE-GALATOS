@@ -46,7 +46,7 @@ const CartDrawer = () => {
   return (
     <>
       <div
-        className="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-60 transition-opacity"
+        className="fixed inset-0 bg-slate-900/20  z-60 transition-opacity"
         onClick={() => setIsCartOpen(false)}
       />
 
