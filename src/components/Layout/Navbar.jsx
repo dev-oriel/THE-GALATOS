@@ -26,8 +26,8 @@ const Navbar = () => {
             <span className="material-symbols-outlined text-primary text-3xl transition-transform duration-700 group-hover:rotate-180">
               auto_awesome
             </span>
-            <h1 className="text-xl font-bold tracking-tighter uppercase italic font-display text-slate-900 dark:text-slate-100">
-              Elegance
+            <h1 className="text-xl font-bold tracking-tighter uppercase font-display text-primary dark:text-slate-100">
+              THE GALATOS
             </h1>
           </Link>
 
