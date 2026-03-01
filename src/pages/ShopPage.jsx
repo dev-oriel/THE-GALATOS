@@ -83,7 +83,7 @@ const ShopPage = () => {
         <div className="max-w-2xl">
           <h2 className="text-5xl md:text-6xl font-light tracking-tight mb-4">
             Handmade{" "}
-            <span className="text-primary italic font-medium">Essentials</span>
+            <span className="text-primary font-medium">Essentials</span>
           </h2>
           <p className="text-lg text-slate-500 dark:text-slate-400 font-light leading-relaxed">
             A curated collection of small-batch ceramic, wood, and textile goods
