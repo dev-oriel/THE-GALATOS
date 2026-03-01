@@ -159,7 +159,7 @@ const CartDrawer = () => {
 
 const CartItem = ({ item, onUpdate, onRemove }) => (
   <div className="flex gap-6 items-start group animate-in fade-in slide-in-from-bottom-2">
-    <div className="h-28 w-24 bg-background-light dark:bg-slate-800 rounded-lg flex-shrink-0 overflow-hidden">
+    <div className="h-28 w-24 bg-background-light dark:bg-slate-800 rounded-lg shrink-0 overflow-hidden">
       <img
         className="h-full w-full object-cover"
         src={item.image}
@@ -189,7 +189,7 @@ const CartItem = ({ item, onUpdate, onRemove }) => (
           >
             -
           </button>
-          <span className="px-3 py-1 text-sm font-medium min-w-[2rem] text-center">
+          <span className="px-3 py-1 text-sm font-medium min-w-8 text-center">
             {item.quantity}
           </span>
           <button
