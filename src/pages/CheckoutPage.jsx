@@ -36,7 +36,7 @@ const CheckoutPage = () => {
         <div className="flex-1 px-6 py-12 lg:pr-16 lg:border-r border-primary/10">
           <div className="max-w-xl ml-auto">
             <nav className="flex items-center gap-2 text-sm mb-8 text-slate-500 font-medium uppercase tracking-widest text-[10px]">
-              <span className="text-primary font-bold">Information</span>
+              <span className="text-primary font-bold">Inform ation</span>
               <span className="material-symbols-outlined text-xs">
                 chevron_right
               </span>
