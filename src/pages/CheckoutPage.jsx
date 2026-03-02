@@ -54,7 +54,7 @@ const CheckoutPage = () => {
               <div className="space-y-4">
                 <div className="flex flex-col gap-2">
                   <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500">
-                    Email Address
+                    Email fucking Address
                   </label>
                   <input
                     className="w-full border-primary/20 bg-white dark:bg-white/5 p-4 rounded-lg focus:ring-primary focus:border-primary transition-all outline-none"
