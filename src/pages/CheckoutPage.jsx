@@ -21,7 +21,7 @@ const CheckoutPage = () => {
               </span>
             </div>
             <h1 className="text-xl text-primary font-bold tracking-tight uppercase">
-              THE GALATOS
+              THE GALATOS A
             </h1>
           </Link>
           <div className="flex items-center gap-2 text-slate-500 text-sm font-medium">
