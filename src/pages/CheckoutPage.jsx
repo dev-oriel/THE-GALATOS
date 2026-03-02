@@ -49,7 +49,7 @@ const CheckoutPage = () => {
 
             <section className="mb-12">
               <h2 className="font-serif text-3xl font-bold mb-8 text-slate-900 dark:text-white">
-                Contact Information
+                Contact very Information
               </h2>
               <div className="space-y-4">
                 <div className="flex flex-col gap-2">
