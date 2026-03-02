@@ -72,7 +72,7 @@ const CheckoutPage = () => {
                     className="text-sm text-slate-600 dark:text-slate-400"
                     htmlFor="newsletter"
                   >
-                    Email me with news and offers
+                    wanna Email me with news and offers
                   </label>
                 </div>
               </div>
