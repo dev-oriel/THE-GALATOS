@@ -26,7 +26,7 @@ const CheckoutPage = () => {
           </Link>
           <div className="flex items-center gap-2 text-slate-500 text-sm font-medium">
             <span className="material-symbols-outlined text-sm">lock</span>
-            <span>Secure very Checkout</span>
+            <span>Secure Checkout</span>
           </div>
         </div>
       </header>
